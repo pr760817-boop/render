@@ -3,50 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Suma - GitHub Pages</title>
+  <title>Plataforma de Operaciones - Pastel</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #fce7f3; /* Rosa pastel suave */
       color: #831843;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
+
+    .badge-engine {
+      background-color: #fdf2f8;
+      color: #db2777;
+      border: 1px solid #f472b6;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(219, 39, 119, 0.1);
+    }
+
     .card {
       background-color: #ffffff;
       border: 1px solid #fbcfe8;
       border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 8px 24px rgba(219, 39, 119, 0.15);
-      width: 320px;
-      text-align: center;
-    }
-    h2 { 
-      color: #db2777; 
-      margin-bottom: 20px; 
-    }
-    input {
+      box-shadow: 0 10px 25px rgba(219, 39, 119, 0.15);
       width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    h1, h2 { color: #db2777; margin-top: 0; }
+    p { color: #9d174d; }
+
+    /* Botones del Menú Principal */
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn-menu {
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #fbcfe8;
+      background-color: #fff1f2;
+      color: #db2777;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-menu:hover {
+      background-color: #fce7f3;
+      border-color: #db2777;
+      transform: translateY(-2px);
+    }
+
+    /* Vistas */
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    .btn-back {
+      background-color: transparent;
+      border: 1px solid #fbcfe8;
+      color: #9d174d;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      color: #831843;
+      border-color: #db2777;
+      background-color: #fff1f2;
+    }
+
+    /* Inputs, botones y tablas */
+    .inputs { display: flex; gap: 10px; margin-bottom: 15px; }
+    
+    input {
+      width: 50%;
       padding: 10px;
-      margin: 8px 0;
       border-radius: 8px;
       border: 1px solid #fbcfe8;
       background-color: #fff5f7;
       color: #831843;
       font-size: 16px;
+      text-align: center;
       box-sizing: border-box;
       outline: none;
     }
+    
     input:focus {
       border-color: #f472b6;
+      box-shadow: 0 0 5px rgba(244, 114, 182, 0.4);
     }
-    button {
+
+    .btn-action {
       width: 100%;
-      padding: 10px;
-      margin-top: 15px;
+      padding: 12px;
+      margin-bottom: 20px;
       border-radius: 8px;
       border: none;
       background-color: #ec4899;
@@ -56,34 +137,141 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
-    button:hover { 
-      background-color: #db2777; 
+    .btn-action:hover { background-color: #db2777; }
+
+    .btn-action-resta {
+      background-color: #a855f7; /* Lila pastel para la resta */
     }
-    .result {
-      margin-top: 20px;
-      padding: 12px;
-      background-color: #fbcfe8;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #9d174d;
+    .btn-action-resta:hover {
+      background-color: #9333ea;
     }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; border-radius: 8px; overflow: hidden; }
+    th, td { border: 1px solid #fbcfe8; padding: 10px; text-align: center; }
+    th { background-color: #fdf2f8; color: #db2777; font-weight: bold; }
+    td { background-color: #ffffff; font-size: 16px; color: #831843; }
+    .total { color: #db2777; font-weight: bold; font-size: 20px; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2>🧮 Suma Interactiva</h2>
-    <input type="number" id="num1" placeholder="Ingresa el primer número">
-    <input type="number" id="num2" placeholder="Ingresa el segundo número">
-    <button onclick="sumar()">Calcular Suma ❤️</button>
-    <div class="result" id="resultado">Resultado: --</div>
+
+  <div class="badge-engine">🌸 Edición Estática Pastel</div>
+
+  <!-- VISTA 1: MENÚ PRINCIPAL -->
+  <div id="view-menu" class="card view-section active">
+    <h1>🎀 Menú Principal</h1>
+    <p>Selecciona la operación que deseas realizar:</p>
+    
+    <div class="menu-buttons">
+      <button class="btn-menu" onclick="showView('view-suma')">
+        ➕ Operación Suma
+      </button>
+      <button class="btn-menu" onclick="showView('view-resta')">
+        ➖ Operación Resta
+      </button>
+    </div>
+  </div>
+
+  <!-- VISTA 2: CALCULADORA DE SUMA -->
+  <div id="view-suma" class="card view-section">
+    <button class="btn-back" onclick="showView('view-menu')">⬅️ Volver al Menú</button>
+    <h2>🧮 Calculadora de Suma</h2>
+    
+    <div class="inputs">
+      <input type="number" id="n1" placeholder="Número 1">
+      <input type="number" id="n2" placeholder="Número 2">
+    </div>
+
+    <button class="btn-action" onclick="realizarSuma()">Calcular Suma ✨</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Número 1</th>
+          <th>Número 2</th>
+          <th>Resultado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="res-n1">-</td>
+          <td id="res-n2">-</td>
+          <td class="total" id="res-total">-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VISTA 3: CALCULADORA DE RESTA -->
+  <div id="view-resta" class="card view-section">
+    <button class="btn-back" onclick="showView('view-menu')">⬅️ Volver al Menú</button>
+    <h2>➖ Calculadora de Resta</h2>
+    
+    <div class="inputs">
+      <input type="number" id="rn1" placeholder="Número 1">
+      <input type="number" id="rn2" placeholder="Número 2">
+    </div>
+
+    <button class="btn-action btn-action-resta" onclick="realizarResta()">Calcular Resta 💜</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Número 1</th>
+          <th>Número 2</th>
+          <th>Resultado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="r-res-n1">-</td>
+          <td id="r-res-n2">-</td>
+          <td class="total" id="r-res-total">-</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
-    function sumar() {
-      const n1 = parseFloat(document.getElementById('num1').value) || 0;
-      const n2 = parseFloat(document.getElementById('num2').value) || 0;
-      document.getElementById('resultado').innerText = `Resultado: ${n1 + n2}`;
+    function showView(viewId) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+    }
+
+    function realizarSuma() {
+      const val1 = document.getElementById('n1').value;
+      const val2 = document.getElementById('n2').value;
+
+      if (val1 === '' || val2 === '') {
+        alert('Por favor ingresa ambos números');
+        return;
+      }
+
+      const num1 = parseFloat(val1);
+      const num2 = parseFloat(val2);
+      const suma = num1 + num2;
+
+      document.getElementById('res-n1').innerText = num1;
+      document.getElementById('res-n2').innerText = num2;
+      document.getElementById('res-total').innerText = suma + " ✨";
+    }
+
+    function realizarResta() {
+      const val1 = document.getElementById('rn1').value;
+      const val2 = document.getElementById('rn2').value;
+
+      if (val1 === '' || val2 === '') {
+        alert('Por favor ingresa ambos números');
+        return;
+      }
+
+      const num1 = parseFloat(val1);
+      const num2 = parseFloat(val2);
+      const resta = num1 - num2;
+
+      document.getElementById('r-res-n1').innerText = num1;
+      document.getElementById('r-res-n2').innerText = num2;
+      document.getElementById('r-res-total').innerText = resta + " 💜";
     }
   </script>
 </body>
