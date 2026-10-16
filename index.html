@@ -17,41 +17,117 @@
         }
         .container {
             background-color: #ffffff;
-            padding: 40px;
+            padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(107, 70, 193, 0.15);
             text-align: center;
-            max-width: 400px;
+            max-width: 380px;
             width: 100%;
         }
         h1 {
             color: #6b46c1;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 10px;
         }
         p {
             color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
             font-size: 14px;
+            font-weight: 600;
+            color: #5b21b6;
+        }
+        input {
+            width: 60%;
+            padding: 8px;
+            border: 1px solid #d8b4fe;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            outline: none;
+        }
+        input:focus {
+            border-color: #9333ea;
+        }
+        button {
+            background-color: #9333ea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #7e22ce;
+        }
+        .resultado {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #581c87;
         }
         .badge {
             display: inline-block;
             background-color: #e9d5ff;
             color: #581c87;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
-            margin-top: 20px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>¡Aplicación de Suma en Línea!</h1>
-        <p>Desplegado automáticamente mediante GitHub Actions y Python.</p>
+        <h1>¡Calculadora de Suma!</h1>
+        <p>Automatizado mediante GitHub Actions y Python.</p>
+        
+        <div class="input-group">
+            <label for="num1">Número 1:</label>
+            <input type="number" id="num1" placeholder="Ej. 10">
+        </div>
+        
+        <div class="input-group">
+            <label for="num2">Número 2:</label>
+            <input type="number" id="num2" placeholder="Ej. 5">
+        </div>
+
+        <button onclick="realizarSuma()">Sumar</button>
+
+        <div class="resultado" id="resultadoTexto">Resultado: --</div>
+
         <div class="badge">Estado: Despliegue Exitoso</div>
     </div>
+
+    <script>
+        function realizarSuma() {
+            let n1 = parseFloat(document.getElementById('num1').value);
+            let n2 = parseFloat(document.getElementById('num2').value);
+            
+            if (isNaN(n1) || isNaN(n2)) {
+                document.getElementById('resultadoTexto').innerText = "Por favor ingresa ambos números";
+                return;
+            }
+            
+            let suma = n1 + n2;
+            document.getElementById('resultadoTexto').innerText = "Resultado: " + suma;
+        }
+    </script>
 
 </body>
 </html>
