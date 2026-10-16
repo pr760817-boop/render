@@ -1,17 +1,13 @@
 name: Ejecutar Suma Python
 
-on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Obtener el código del repositorio
+    - name: Obtener el codigo del repositorio
       uses: actions/checkout@v3
 
     - name: Configurar Python
