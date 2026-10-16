@@ -14,7 +14,7 @@ if not settings.configured:
     )
     django.setup()
 
-# 2. Plantilla con Suma y Resta interactivas
+# 2. Plantilla con Suma y Resta interactivas (Estilo Rosado / Feminino Pastel)
 template_django = """<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,8 +24,8 @@ template_django = """<!DOCTYPE html>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0d1117;
-      color: #c9d1d9;
+      background-color: #fce7f3; /* Rosa pastel suave */
+      color: #831843;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -37,29 +37,32 @@ template_django = """<!DOCTYPE html>
     }
 
     .badge-django {
-      background-color: #092e20;
-      color: #2ba977;
-      border: 1px solid #2ba977;
+      background-color: #fdf2f8;
+      color: #db2777;
+      border: 1px solid #f472b6;
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: bold;
       margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(219, 39, 119, 0.1);
     }
 
     .card {
-      background-color: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 12px;
+      background-color: #ffffff;
+      border: 1px solid #fbcfe8;
+      border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(219, 39, 119, 0.15);
       width: 100%;
       max-width: 420px;
       text-align: center;
       box-sizing: border-box;
     }
 
-    h1, h2 { color: #58a6ff; margin-top: 0; }
+    h1, h2 { color: #db2777; margin-top: 0; }
+
+    p { color: #9d174d; }
 
     /* Botones del Menú Principal */
     .menu-buttons {
@@ -71,10 +74,10 @@ template_django = """<!DOCTYPE html>
 
     .btn-menu {
       padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #30363d;
-      background-color: #21262d;
-      color: #58a6ff;
+      border-radius: 10px;
+      border: 1px solid #fbcfe8;
+      background-color: #fff1f2;
+      color: #db2777;
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
@@ -86,8 +89,8 @@ template_django = """<!DOCTYPE html>
     }
 
     .btn-menu:hover {
-      background-color: #30363d;
-      border-color: #58a6ff;
+      background-color: #fce7f3;
+      border-color: #db2777;
       transform: translateY(-2px);
     }
 
@@ -102,69 +105,80 @@ template_django = """<!DOCTYPE html>
 
     .btn-back {
       background-color: transparent;
-      border: 1px solid #30363d;
-      color: #8b949e;
+      border: 1px solid #fbcfe8;
+      color: #9d174d;
       padding: 8px 16px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       margin-bottom: 20px;
       font-weight: bold;
+      transition: all 0.2s ease;
     }
 
     .btn-back:hover {
-      color: #ffffff;
-      border-color: #8b949e;
+      color: #831843;
+      border-color: #db2777;
+      background-color: #fff1f2;
     }
 
     /* Inputs, botones y tablas */
     .inputs { display: flex; gap: 10px; margin-bottom: 15px; }
+    
     input {
       width: 50%;
       padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #30363d;
-      background-color: #0d1117;
-      color: #fff;
+      border-radius: 8px;
+      border: 1px solid #fbcfe8;
+      background-color: #fff5f7;
+      color: #831843;
       font-size: 16px;
       text-align: center;
       box-sizing: border-box;
+      outline: none;
     }
+    
+    input:focus {
+      border-color: #f472b6;
+      box-shadow: 0 0 5px rgba(244, 114, 182, 0.4);
+    }
+
     .btn-action {
       width: 100%;
       padding: 12px;
       margin-bottom: 20px;
-      border-radius: 6px;
+      border-radius: 8px;
       border: none;
-      background-color: #238636;
+      background-color: #ec4899;
       color: white;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.2s;
     }
-    .btn-action:hover { background-color: #2ea043; }
+    .btn-action:hover { background-color: #db2777; }
 
     .btn-action-resta {
-      background-color: #8957e5;
+      background-color: #a855f7; /* Tono lila/morado pastel para la resta */
     }
     .btn-action-resta:hover {
-      background-color: #9e6aef;
+      background-color: #9333ea;
     }
 
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #30363d; padding: 10px; text-align: center; }
-    th { background-color: #21262d; color: #58a6ff; }
-    td { background-color: #0d1117; font-size: 16px; }
-    .total { color: #7ee787; font-weight: bold; font-size: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; border-radius: 8px; overflow: hidden; }
+    th, td { border: 1px solid #fbcfe8; padding: 10px; text-align: center; }
+    th { background-color: #fdf2f8; color: #db2777; font-weight: bold; }
+    td { background-color: #ffffff; font-size: 16px; color: #831843; }
+    .total { color: #db2777; font-weight: bold; font-size: 20px; }
   </style>
 </head>
 <body>
 
-  <div class="badge-django">⚡ Motor Django v{{ django_version }}</div>
+  <div class="badge-django">🌸 Motor Django v{{ django_version }} - Edición Pastel</div>
 
   <!-- VISTA 1: MENÚ PRINCIPAL -->
   <div id="view-menu" class="card view-section active">
-    <h1>📌 Menú Principal</h1>
-    <p style="color: #8b949e;">Selecciona la operación que deseas realizar:</p>
+    <h1>🎀 Menú Principal</h1>
+    <p>Selecciona la operación que deseas realizar:</p>
     
     <div class="menu-buttons">
       <button class="btn-menu" onclick="showView('view-suma')">
@@ -186,7 +200,7 @@ template_django = """<!DOCTYPE html>
       <input type="number" id="n2" placeholder="Número 2">
     </div>
 
-    <button class="btn-action" onclick="realizarSuma()">Calcular Suma 🔥</button>
+    <button class="btn-action" onclick="realizarSuma()">Calcular Suma ✨</button>
 
     <table>
       <thead>
@@ -216,7 +230,7 @@ template_django = """<!DOCTYPE html>
       <input type="number" id="rn2" placeholder="Número 2">
     </div>
 
-    <button class="btn-action btn-action-resta" onclick="realizarResta()">Calcular Resta ❄️</button>
+    <button class="btn-action btn-action-resta" onclick="realizarResta()">Calcular Resta 💜</button>
 
     <table>
       <thead>
@@ -259,7 +273,7 @@ template_django = """<!DOCTYPE html>
 
       document.getElementById('res-n1').innerText = num1;
       document.getElementById('res-n2').innerText = num2;
-      document.getElementById('res-total').innerText = suma + " 🔥";
+      document.getElementById('res-total').innerText = suma + " ✨";
     }
 
     // Lógica interactiva de Resta
@@ -278,7 +292,7 @@ template_django = """<!DOCTYPE html>
 
       document.getElementById('r-res-n1').innerText = num1;
       document.getElementById('r-res-n2').innerText = num2;
-      document.getElementById('r-res-total').innerText = resta + " ❄️";
+      document.getElementById('r-res-total').innerText = resta + " 💜";
     }
   </script>
 </body>
@@ -299,4 +313,4 @@ html_generado = template.render(contexto)
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html_generado)
 
-print("Calculadoras interactivas de Suma y Resta generadas con éxito mediante Django.")
+print("¡Calculadoras interactivas con diseño pastel rosado generadas con éxito mediante Django!")
